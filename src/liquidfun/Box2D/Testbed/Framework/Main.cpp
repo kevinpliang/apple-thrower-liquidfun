@@ -569,13 +569,13 @@ static void Exit(int code)
 }
 #endif  // ENABLE_GLUI
 
-#if ENABLE_GLUI
-static void SingleStep(int)
-{
-	settings.pause = 1;
-	settings.singleStep = 1;
-}
-#endif  // ENABLE_GLUI
+// #if ENABLE_GLUI
+// static void SingleStep(int)
+// {
+// 	settings.pause = 1;
+// 	settings.singleStep = 1;
+// }
+// #endif  // ENABLE_GLUI
 
 }  // namespace TestMain
 
@@ -604,7 +604,7 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutInitWindowSize(width, height);
 	char title[32];
-	sprintf(title, "Box2D Version %d.%d.%d", b2_version.major, b2_version.minor, b2_version.revision);
+	sprintf(title, "Apple Thrower");
 	mainWindow = glutCreateWindow(title);
 	//glutSetOption (GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 
@@ -635,65 +635,71 @@ int main(int argc, char** argv)
 	glui = GLUI_Master.create_glui_subwindow( mainWindow,
 		GLUI_SUBWINDOW_RIGHT );
 
-	glui->add_statictext("Tests");
-	GLUI_Listbox* testList =
-		glui->add_listbox("", &testSelection);
+	glui->add_statictext("Apple Thrower");
 
+	// GLUI_Listbox* testList =
+	// 	glui->add_listbox("", &testSelection);
+
+	GLUI_Panel* help = glui->add_panel("Help");
+	glui->add_statictext_to_panel(help, "WASD to control character");
+	glui->add_statictext_to_panel(help, "Click to throw apples");
+	glui->add_statictext_to_panel(help, "Kill enemies for apples");
+	glui->add_statictext_to_panel(help, "Stay alive!");
 	glui->add_separator();
 
-	GLUI_Spinner* velocityIterationSpinner =
-		glui->add_spinner("Vel Iters", GLUI_SPINNER_INT, &settings.velocityIterations);
-	velocityIterationSpinner->set_int_limits(1, 500);
+	// GLUI_Spinner* velocityIterationSpinner =
+	// 	glui->add_spinner("Vel Iters", GLUI_SPINNER_INT, &settings.velocityIterations);
+	// velocityIterationSpinner->set_int_limits(1, 500);
 
-	GLUI_Spinner* positionIterationSpinner =
-		glui->add_spinner("Pos Iters", GLUI_SPINNER_INT, &settings.positionIterations);
-	positionIterationSpinner->set_int_limits(0, 100);
+	// GLUI_Spinner* positionIterationSpinner =
+	// 	glui->add_spinner("Pos Iters", GLUI_SPINNER_INT, &settings.positionIterations);
+	// positionIterationSpinner->set_int_limits(0, 100);
 
-	GLUI_Spinner* particleIterationSpinner =
-		glui->add_spinner("Pcl Iters", GLUI_SPINNER_INT, &settings.particleIterations);
-	particleIterationSpinner->set_int_limits(1, 100);
+	// GLUI_Spinner* particleIterationSpinner =
+	// 	glui->add_spinner("Pcl Iters", GLUI_SPINNER_INT, &settings.particleIterations);
+	// particleIterationSpinner->set_int_limits(1, 100);
 
-	GLUI_Spinner* hertzSpinner =
-		glui->add_spinner("Hertz", GLUI_SPINNER_FLOAT, &settingsHz);
+	// GLUI_Spinner* hertzSpinner =
+	// 	glui->add_spinner("Hertz", GLUI_SPINNER_FLOAT, &settingsHz);
 
-	hertzSpinner->set_float_limits(5.0f, 200.0f);
+	// hertzSpinner->set_float_limits(5.0f, 200.0f);
 
-	glui->add_checkbox("Sleep", &settings.enableSleep);
-	glui->add_checkbox("Warm Starting", &settings.enableWarmStarting);
-	glui->add_checkbox("Time of Impact", &settings.enableContinuous);
-	glui->add_checkbox("Sub-Stepping", &settings.enableSubStepping);
-	glui->add_checkbox("Strict Particle/Body Contacts", &settings.strictContacts);
+	// glui->add_checkbox("Sleep", &settings.enableSleep);
+	// glui->add_checkbox("Warm Starting", &settings.enableWarmStarting);
+	// glui->add_checkbox("Time of Impact", &settings.enableContinuous);
+	// glui->add_checkbox("Sub-Stepping", &settings.enableSubStepping);
+	// glui->add_checkbox("Strict Particle/Body Contacts", &settings.strictContacts);
 
-	//glui->add_separator();
+	// //glui->add_separator();
 
-	GLUI_Panel* drawPanel =	glui->add_panel("Draw");
-	glui->add_checkbox_to_panel(drawPanel, "Shapes", &settings.drawShapes);
-	glui->add_checkbox_to_panel(drawPanel, "Particles", &settings.drawParticles);
-	glui->add_checkbox_to_panel(drawPanel, "Joints", &settings.drawJoints);
-	glui->add_checkbox_to_panel(drawPanel, "AABBs", &settings.drawAABBs);
-	glui->add_checkbox_to_panel(drawPanel, "Contact Points", &settings.drawContactPoints);
-	glui->add_checkbox_to_panel(drawPanel, "Contact Normals", &settings.drawContactNormals);
-	glui->add_checkbox_to_panel(drawPanel, "Contact Impulses", &settings.drawContactImpulse);
-	glui->add_checkbox_to_panel(drawPanel, "Friction Impulses", &settings.drawFrictionImpulse);
-	glui->add_checkbox_to_panel(drawPanel, "Center of Masses", &settings.drawCOMs);
-	glui->add_checkbox_to_panel(drawPanel, "Statistics", &settings.drawStats);
-	glui->add_checkbox_to_panel(drawPanel, "Profile", &settings.drawProfile);
+	// GLUI_Panel* drawPanel =	glui->add_panel("Draw");
+	// glui->add_checkbox_to_panel(drawPanel, "Shapes", &settings.drawShapes);
+	// glui->add_checkbox_to_panel(drawPanel, "Particles", &settings.drawParticles);
+	// glui->add_checkbox_to_panel(drawPanel, "Joints", &settings.drawJoints);
+	// glui->add_checkbox_to_panel(drawPanel, "AABBs", &settings.drawAABBs);
+	// glui->add_checkbox_to_panel(drawPanel, "Contact Points", &settings.drawContactPoints);
+	// glui->add_checkbox_to_panel(drawPanel, "Contact Normals", &settings.drawContactNormals);
+	// glui->add_checkbox_to_panel(drawPanel, "Contact Impulses", &settings.drawContactImpulse);
+	// glui->add_checkbox_to_panel(drawPanel, "Friction Impulses", &settings.drawFrictionImpulse);
+	// glui->add_checkbox_to_panel(drawPanel, "Center of Masses", &settings.drawCOMs);
+	// glui->add_checkbox_to_panel(drawPanel, "Statistics", &settings.drawStats);
+	// glui->add_checkbox_to_panel(drawPanel, "Profile", &settings.drawProfile);
 
-	int32 testCount = 0;
-	TestEntry* e = g_testEntries;
-	while (e->createFcn)
-	{
-		testList->add_item(testCount, e->name);
-		++testCount;
-		++e;
-	}
+	// int32 testCount = 0;
+	// TestEntry* e = g_testEntries;
+	// while (e->createFcn)
+	// {
+	// 	testList->add_item(testCount, e->name);
+	// 	++testCount;
+	// 	++e;
+	// }
 
-	glui->add_button("Pause", 0, Pause);
-	glui->add_button("Single Step", 0, SingleStep);
-	glui->add_button("Restart", 0, Restart);
+	glui->add_button("[P] Pause", 0, Pause);
+	// glui->add_button("Single Step", 0, SingleStep);
+	glui->add_button("[R] Restart", 0, Restart);
+	glui->add_button("[Esc] Quit", 0,(GLUI_Update_CB)Exit);
 
-	glui->add_button("Quit", 0,(GLUI_Update_CB)Exit);
-
+	glui->add_separator();
 	glui->set_main_gfx_window( mainWindow );
 
 #endif  // ENABLE_GLUI

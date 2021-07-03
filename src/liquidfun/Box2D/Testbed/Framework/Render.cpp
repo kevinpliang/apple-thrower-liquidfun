@@ -89,8 +89,9 @@ void DebugDraw::DrawFlatPolygon(const b2Vec2* vertices, int32 vertexCount, const
 void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
 	glEnable(GL_BLEND);
+	glLineWidth(3);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glColor4f(0.5f * color.r, 0.5f * color.g, 0.5f * color.b, 0.5f);
+	glColor4f( 1, 1, 1, 0.5f);
 	glBegin(GL_TRIANGLE_FAN);
 	for (int32 i = 0; i < vertexCount; ++i)
 	{
@@ -99,7 +100,10 @@ void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, cons
 	glEnd();
 	glDisable(GL_BLEND);
 
-	glColor4f(color.r, color.g, color.b, 1.0f);
+	glColor4f( 1, 1, 1, 1.0f);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, vertexCount);
+
+	glColor4f( 1, 1, 1, 1.0f);
 	glBegin(GL_LINE_LOOP);
 	for (int32 i = 0; i < vertexCount; ++i)
 	{
@@ -298,7 +302,7 @@ void DebugDraw::DrawString(int x, int y, const char *string, ...)
 	glPushMatrix();
 	glLoadIdentity();
 
-	glColor3f(0.9f, 0.6f, 0.6f);
+	glColor3f(1.0f, 1.0f, 1.0f);
 	glRasterPos2i(x, y);
 	int32 length = (int32)strlen(buffer);
 	for (int32 i = 0; i < length; ++i)
@@ -324,7 +328,7 @@ void DebugDraw::DrawString(const b2Vec2& p, const char *string, ...)
 	vsprintf(buffer, string, arg);
 	va_end(arg);
 
-	glColor3f(0.5f, 0.9f, 0.5f);
+	glColor3f(1.0f, 1.0f, 1.0f);
 	glRasterPos2f(p.x, p.y);
 
 	int32 length = (int32)strlen(buffer);
